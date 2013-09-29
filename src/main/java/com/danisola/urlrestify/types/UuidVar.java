@@ -1,0 +1,19 @@
+package com.danisola.urlrestify.types;
+
+import java.util.UUID;
+
+public class UuidVar extends AbstractVarType<UUID> {
+
+    public static UuidVar uuidVar(String id) {
+        return new UuidVar(id);
+    }
+
+    private UuidVar(String id) {
+        super(id, "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
+    }
+
+    @Override
+    public UUID convert(String value) {
+        return UUID.fromString(value);
+    }
+}

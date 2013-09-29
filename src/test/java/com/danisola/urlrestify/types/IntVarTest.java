@@ -1,0 +1,28 @@
+package com.danisola.urlrestify.types;
+
+import com.danisola.urlrestify.RestUrl;
+import com.danisola.urlrestify.RestParser;
+import org.junit.Test;
+
+import static com.danisola.urlrestify.types.IntVar.intVar;
+import static com.danisola.urlrestify.types.IntVar.posIntVar;
+import static com.danisola.urlrestify.RestParser.parser;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
+public class IntVarTest {
+
+    @Test
+    public void whenNegIntIsCorrectThenIntegerIsReturned() {
+        RestParser parser = parser("/users/{}", intVar("userId"));
+        RestUrl vars = parser.parse("http://www.mail.com/users/-2397");
+        assertThat((Integer) vars.variable("userId"), is(-2397));
+    }
+
+    @Test
+    public void whenNegIntIsNotExpectedThenParse() {
+        RestParser parser = parser("/users/{}", posIntVar("userId"));
+        RestUrl vars = parser.parse("http://www.mail.com/users/-2397");
+        assertThat(vars.hasErrors(), is(true));
+    }
+}
