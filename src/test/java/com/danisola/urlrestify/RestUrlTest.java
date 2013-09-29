@@ -5,10 +5,9 @@ import org.junit.Test;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.danisola.urlrestify.RestParser.parser;
 import static com.danisola.urlrestify.types.FloatVar.floatVar;
 import static com.danisola.urlrestify.types.IntVar.intVar;
-import static com.danisola.urlrestify.types.IntVar.posIntVar;
-import static com.danisola.urlrestify.RestParser.parser;
 import static com.danisola.urlrestify.types.StringVar.strVar;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -16,7 +15,7 @@ import static org.hamcrest.Matchers.is;
 public class RestUrlTest {
 
     @Test
-    public void whenManyParametersRequestedThenValuesAreCorrect() throws MalformedURLException {
+    public void whenMultipleParametersAreRequestedThenItsValuesAreCorrect() throws MalformedURLException {
         RestParser parser = parser("/{}/{}?float={}&str={}&int={}",
                 strVar("first"), strVar("second"), floatVar("float"), strVar("str"), intVar("int"));
         RestUrl restUrl = parser.parse("http://www.example.com/a/b?float=3.14&str=pi&int=3");
@@ -25,15 +24,6 @@ public class RestUrlTest {
         assertThat((Float) restUrl.variable("float"), is(3.14f));
         assertThat((String) restUrl.variable("str"), is("pi"));
         assertThat((Integer) restUrl.variable("int"), is(3));
-    }
-
-    @Test
-    public void whenParametersRequestedThenValuesAreCorrect() throws MalformedURLException {
-        RestParser parser = parser("/{}?ts={}&to={}", strVar("userId"), posIntVar("ts"), strVar("to"));
-        RestUrl restUrl = parser.parse("http://www.mail.com/john?to=ben&ts=3456");
-        assertThat((String) restUrl.variable("userId"), is("john"));
-        assertThat((Integer) restUrl.variable("ts"), is(3456));
-        assertThat((String) restUrl.variable("to"), is("ben"));
     }
 
     @Test
