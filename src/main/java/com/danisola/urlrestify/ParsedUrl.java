@@ -26,8 +26,7 @@ class ParsedUrl {
     }
 
     public static ParsedUrl parseUrl(String url) {
-        String path = null;
-        String queryString = null;
+        String path, queryString;
 
         int questionIndex = url.indexOf("?");
         if (questionIndex >= 0) {
@@ -35,6 +34,7 @@ class ParsedUrl {
             queryString = url.substring(questionIndex + 1);
         } else {
             path = url;
+            queryString = null;
         }
 
         return new ParsedUrl(path, parseParams(queryString));

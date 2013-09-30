@@ -1,27 +1,28 @@
 # URL-RESTify #
 
-URL-RESTify is a lightweight library (16KB!) to easily access the variables and parameters of any RESTful URL.
+URL-RESTify is a lightweight library (16KB!) to easily validate and access the variables of any RESTful URL.
 
 Example:
 
 ```
 public class MyServlet extends HttpServlet {
 
-    RestParser parser = parser("/countries/{}/cities?population={}",
-            strVar("countryId"), intVar("population"));
+  RestParser parser = parser("/countries/{}/cities?population={}",
+          strVar("countryId"), intVar("population"));
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
-        RestUrl restUrl = parser.parse(req.getRequestURL(), req.getQueryString());
-        if (restUrl.hasErrors()) {
-            resp.setStatus(SC_BAD_REQUEST, restUrl.errorMessage());
-            return;
-        }
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
 
-        String countryId = restUrl.variable("countryId");
-        Integer population = restUrl.variable("population");
-        // Your code here
+    RestUrl restUrl = parser.parse(req.getRequestURL(), req.getQueryString());
+    if (!restUrl.isValid()) {
+      resp.setStatus(SC_BAD_REQUEST, restUrl.errorMessage());
+      return;
     }
+
+    String countryId = restUrl.variable("countryId");
+    Integer population = restUrl.variable("population");
+    // Your code here
+  }
 }
 ```
 

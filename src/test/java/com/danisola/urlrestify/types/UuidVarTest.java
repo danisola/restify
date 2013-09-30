@@ -17,7 +17,7 @@ public class UuidVarTest {
     public void whenNegIntIsNotExpectedThenParse() {
         RestParser parser = parser("/users/{}", uuidVar("userId"));
         UUID uuid = UUID.randomUUID();
-        RestUrl vars = parser.parse("http://www.mail.com/users/" + uuid);
-        assertThat((UUID) vars.variable("userId"), is(uuid));
+        RestUrl url = parser.parse("http://www.mail.com/users/" + uuid);
+        assertThat((UUID) url.variable("userId"), is(uuid));
     }
 }

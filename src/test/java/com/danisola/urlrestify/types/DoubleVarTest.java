@@ -15,7 +15,7 @@ public class DoubleVarTest {
     public void whenKeyIsWellSetThenValueIsCorrect() {
         RestParser parser = parser("/users/{}", doubleVar("userId"));
         Double userId = Double.MAX_VALUE;
-        RestUrl vars = parser.parse("http://www.mail.com/users/" + userId);
-        assertThat((Double) vars.variable("userId"), is(userId));
+        RestUrl url = parser.parse("http://www.mail.com/users/" + userId);
+        assertThat((Double) url.variable("userId"), is(userId));
     }
 }

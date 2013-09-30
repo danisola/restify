@@ -8,33 +8,30 @@ public class RestUrl {
 
     private final VarType[] types;
     private final Object[] values;
-    private final boolean error;
     private final String errorMessage;
 
-    static RestUrl parseError(String errorMsg) {
+    static RestUrl invalidRestUrl(String errorMsg) {
         return new RestUrl(errorMsg);
     }
 
-    static RestUrl parseResult(VarType[] types, Object[] values) {
+    static RestUrl restUrl(VarType[] types, Object[] values) {
         return new RestUrl(types, values);
     }
 
     private RestUrl(VarType[] types, Object[] values) {
         this.types = types;
         this.values = values;
-        this.error = false;
         this.errorMessage = null;
     }
 
     private RestUrl(String errorMsg) {
         this.types = null;
         this.values = null;
-        this.error = true;
         this.errorMessage = errorMsg;
     }
 
-    public boolean hasErrors() {
-        return error;
+    public boolean isValid() {
+        return errorMessage == null;
     }
 
     public String errorMessage() {

@@ -10,8 +10,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.danisola.urlrestify.ParsedUrl.parseParams;
-import static com.danisola.urlrestify.RestUrl.parseError;
-import static com.danisola.urlrestify.RestUrl.parseResult;
+import static com.danisola.urlrestify.RestUrl.invalidRestUrl;
+import static com.danisola.urlrestify.RestUrl.restUrl;
 import static com.danisola.urlrestify.preconditions.Preconditions.*;
 
 public class RestParser {
@@ -87,12 +87,12 @@ public class RestParser {
 
     public RestUrl parse(CharSequence path, String queryString) {
         if (path == null) {
-            return parseError("Url is null");
+            return invalidRestUrl("Url is null");
         }
 
         Matcher matcher = pathPattern.matcher(path);
         if (!matcher.find()) {
-            return parseError("Path '" + path + "' does not match the pattern '" + pathPattern + "'");
+            return invalidRestUrl("Path '" + path + "' does not match the pattern '" + pathPattern + "'");
         }
 
         int numVars = pathTypes.length + paramTypes.length;
@@ -122,7 +122,7 @@ public class RestParser {
                         varTypes[varPos] = type;
                         varValues[varPos] = type.convert(valuePair.getValue());
                     } else {
-                        return parseError("Parameter '" + paramName+ "' does not match the pattern '" +
+                        return invalidRestUrl("Parameter '" + paramName + "' does not match the pattern '" +
                                 type.getGroupPattern() + "'");
                     }
                     break;
@@ -130,6 +130,6 @@ public class RestParser {
             }
         }
 
-        return parseResult(varTypes, varValues);
+        return restUrl(varTypes, varValues);
     }
 }

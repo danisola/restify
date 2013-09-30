@@ -15,7 +15,7 @@ public class FloatVarTest {
     public void whenKeyIsWellSetThenValueIsCorrect() {
         RestParser parser = parser("/users/{}", floatVar("userId"));
         Float userId = Float.MAX_VALUE;
-        RestUrl vars = parser.parse("http://www.mail.com/users/" + userId);
-        assertThat((Float) vars.variable("userId"), is(userId));
+        RestUrl url = parser.parse("http://www.mail.com/users/" + userId);
+        assertThat((Float) url.variable("userId"), is(userId));
     }
 }
