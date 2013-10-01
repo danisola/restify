@@ -8,6 +8,4 @@ public interface VarType<T> {
     public String getGroupPattern();
 
     public T convert(String value);
-
-    public boolean matches(String value);
 }

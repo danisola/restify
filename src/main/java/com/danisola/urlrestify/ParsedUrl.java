@@ -17,15 +17,15 @@ class ParsedUrl {
         this.parameters = parameters;
     }
 
-    public String getPath() {
+    String getPath() {
         return path;
     }
 
-    public List<NameValuePair> getParameters() {
+    List<NameValuePair> getParameters() {
         return parameters;
     }
 
-    public static ParsedUrl parseUrl(String url) {
+    static ParsedUrl parseUrl(String url) {
         String path, queryString;
 
         int questionIndex = url.indexOf("?");
@@ -40,7 +40,7 @@ class ParsedUrl {
         return new ParsedUrl(path, parseParams(queryString));
     }
 
-    public static List<NameValuePair> parseParams(String query) {
+    static List<NameValuePair> parseParams(String query) {
         if (query == null || query.isEmpty()) {
             return Collections.emptyList();
         }
@@ -65,7 +65,7 @@ class ParsedUrl {
         return pairs;
     }
 
-    public static class NameValuePair {
+    static class NameValuePair {
 
         private final String name;
         private final String value;
@@ -81,11 +81,6 @@ class ParsedUrl {
 
         public String getValue() {
             return value;
-        }
-
-        @Override
-        public String toString() {
-            return "NameValuePair{name='" + name + "\', value='" + value + "\'}";
         }
     }
 }

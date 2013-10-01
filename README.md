@@ -2,7 +2,9 @@
 
 URL-RESTify is a lightweight library (16KB!) to easily validate and access the variables of any RESTful URL.
 
-Example:
+## Usage ##
+
+Usage example within a Servlet:
 
 ```
 public class MyServlet extends HttpServlet {
@@ -11,11 +13,11 @@ public class MyServlet extends HttpServlet {
           strVar("countryId"), intVar("population"));
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
     RestUrl restUrl = parser.parse(req.getRequestURL(), req.getQueryString());
     if (!restUrl.isValid()) {
-      resp.setStatus(SC_BAD_REQUEST, restUrl.errorMessage());
+      resp.setStatus(SC_BAD_REQUEST); // Use restUrl.errorMessage() to debug
       return;
     }
 
@@ -24,6 +26,17 @@ public class MyServlet extends HttpServlet {
     // Your code here
   }
 }
+```
+
+Example composing variables and using a regex:
+
+```
+  RestParser parser = parser("/battleship/shoot?square={}{}",
+          regexStrVar("char", "[A-L]"), intVar("num"));
+
+  RestUrl url = parser.parse("http://www.games.com/battleship/shoot?square=B7");
+  String xCoord = url.variable("char"); // B
+  Integer yCoord = url.variable("num"); // 7
 ```
 
 See more usage examples in the [tests](https://bitbucket.org/danisola/url-restify/src/master/src/test/java/com/danisola/urlrestify/RestUrlTest.java).
