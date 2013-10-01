@@ -49,7 +49,7 @@ class ParsedUrl {
         int startIndex = 0;
         while (startIndex < query.length()) {
             int equalsIndex = query.indexOf("=", startIndex);
-            checkState(equalsIndex > 0, "Parameters are not well formatted: " + query.substring(startIndex));
+            checkState(equalsIndex > 0, "Parameters are not well formatted: %s", query);
             String paramName = query.substring(startIndex, equalsIndex);
             String paramValue;
             int andIndex = query.indexOf("&", equalsIndex);

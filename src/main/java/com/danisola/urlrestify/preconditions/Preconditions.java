@@ -42,12 +42,13 @@ public class Preconditions {
      * Ensures the truth of an expression
      *
      * @param expression a boolean expression
-     * @param errorMessage the exception message to use if the check fails
+     * @param errorMessageFormat the exception message format to use if the check fails
+     * @param args Arguments referenced by the format specifiers in the format string
      * @throws IllegalStateException if {@code expression} is false
      */
-    public static void checkState(boolean expression, String errorMessage) {
+    public static void checkState(boolean expression, String errorMessageFormat, Object ... args) {
         if (!expression) {
-            throw new IllegalStateException(errorMessage);
+            throw new IllegalStateException(String.format(errorMessageFormat, args));
         }
     }
 

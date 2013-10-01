@@ -15,6 +15,11 @@ public class RestParserTest {
         parser.parse("www.football.com/leagues/seattle/teams/trebuchet/players/21");
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void whenParameterValueHasNoVariableThenExceptionIsThrown() {
+        parser("/countries/{}?city=lon", strVar("GB"));
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void whenNoTypesAreProvidedThenExceptionIsThrown() {
         parser("/country", null);

@@ -26,6 +26,7 @@ public class RestParser {
         checkPattern(pattern);
         checkArgumentNotNullOrEmpty(types);
 
+        final int numTypes = types.length;
         ParsedUrl parsedUrl = ParsedUrl.parseUrl(pattern);
         StringBuilder sb = new StringBuilder("^");
         sb.append(parsedUrl.getPath());
@@ -34,7 +35,7 @@ public class RestParser {
         int pathVarsIndex = sb.indexOf(VAR_MARKER);
         int typesIndex = 0;
         while (pathVarsIndex >= 0) {
-            checkState(typesIndex < types.length, "There are more variables in the pattern than types");
+            checkState(typesIndex < numTypes, "There are more variables in the pattern than types");
 
             String groupPattern = types[typesIndex].getGroupPattern();
             sb.replace(pathVarsIndex, pathVarsIndex + VAR_MARKER.length(), groupPattern);
@@ -66,7 +67,7 @@ public class RestParser {
                 paramVarCounter++;
             }
 
-            checkState(paramVarsCount > 0, "Parameter '" + pair.getName() + "' has no variables in its value");
+            checkState(paramVarsCount > 0, "Parameter '%s' has no variables in its value", pair.getName());
 
             VarType[] paramTypes = Arrays.copyOfRange(types, typesIndex, typesIndex + paramVarsCount);
             Pattern paramValuePattern = Pattern.compile(sb.append("$").toString());
@@ -74,8 +75,9 @@ public class RestParser {
             typesIndex += paramVarsCount;
         }
 
-        checkState(pathTypes.length + paramVarCounter == types.length, "The number of variables and types do not match");
-        return new RestParser(pathPattern, pathTypes, paramVars, types.length);
+        final int numVars = pathTypes.length + paramVarCounter;
+        checkState(numVars == numTypes, "The number of variables (%d) and types (%d) do not match", numVars, numTypes);
+        return new RestParser(pathPattern, pathTypes, paramVars, numTypes);
     }
 
     private static void checkPattern(String pattern) {
