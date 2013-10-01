@@ -26,4 +26,11 @@ public class IntVarTest {
         RestUrl url = parser.parse("http://www.mail.com/users/-2397");
         assertThat(url, isInvalid());
     }
+
+    @Test
+    public void whenValueIsTooBigThenUrlIsInvalid() {
+        RestParser parser = parser("/users/{}", intVar("userId"));
+        RestUrl url = parser.parse("http://www.mail.com/users/493483292384928439432397");
+        assertThat(url, isInvalid());
+    }
 }

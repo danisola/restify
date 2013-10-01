@@ -112,6 +112,7 @@ public class RestParser {
             return invalidRestUrl("Url is null");
         }
 
+        // Processing path variables
         Matcher matcher = pathPattern.matcher(path);
         if (!matcher.matches()) {
             return invalidRestUrl("Path '" + path + "' does not match the pattern '" + pathPattern + "'");
@@ -119,13 +120,15 @@ public class RestParser {
 
         Object[] varValues = new Object[numVariables];
         VarType[] varTypes = new VarType[numVariables];
-
-        // Processing path variables
         int varIndex = 0;
         for (; varIndex < pathTypes.length; varIndex++) {
             VarType type = pathTypes[varIndex];
             varTypes[varIndex] = type;
-            varValues[varIndex] = type.convert(matcher.group(type.getId()));
+            try {
+                varValues[varIndex] = type.convert(matcher.group(type.getId()));
+            } catch (Exception ex) {
+                return invalidRestUrl("Invalid value for variable '" + type.getId() + "' in '" + path + "'");
+            }
         }
 
         // Processing param variables
@@ -144,7 +147,12 @@ public class RestParser {
                 for (int varParamIndex = 0; varParamIndex < paramTypes.length; varParamIndex++) {
                     VarType paramType = paramTypes[varParamIndex];
                     varTypes[varIndex] = paramType;
-                    varValues[varIndex] = paramType.convert(paramMatcher.group(paramType.getId()));
+                    try {
+                        varValues[varIndex] = paramType.convert(paramMatcher.group(paramType.getId()));
+                    } catch (Exception ex) {
+                        return invalidRestUrl("Invalid parameter value '" + paramVar.getName() +
+                                "=" + valuePair.getValue() + "'");
+                    }
                     varIndex++;
                 }
             } else {
