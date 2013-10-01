@@ -6,12 +6,12 @@ import org.junit.Test;
 
 import static com.danisola.urlrestify.RestParser.parser;
 import static com.danisola.urlrestify.matchers.IsInvalid.isInvalid;
-import static com.danisola.urlrestify.types.StringVar.regexStrVar;
-import static com.danisola.urlrestify.types.StringVar.strVar;
+import static com.danisola.urlrestify.types.StrVar.regexStrVar;
+import static com.danisola.urlrestify.types.StrVar.strVar;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class StringVarTest {
+public class StrVarTest {
 
     @Test
     public void whenKeyIsWellSetThenValueIsCorrect() {

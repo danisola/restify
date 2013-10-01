@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static com.danisola.urlrestify.types.IntVar.posIntVar;
 import static com.danisola.urlrestify.RestParser.parser;
-import static com.danisola.urlrestify.types.StringVar.strVar;
+import static com.danisola.urlrestify.types.StrVar.strVar;
 
 public class RestParserTest {
 

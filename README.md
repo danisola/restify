@@ -1,6 +1,6 @@
 # URL-RESTify #
 
-URL-RESTify is a lightweight library (16KB!) to easily validate and access the variables of any RESTful URL.
+URL-RESTify is a lightweight library (18KB!) to easily validate and access the variables of any RESTful URL.
 
 ## Usage ##
 
@@ -15,14 +15,14 @@ public class MyServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
-    RestUrl restUrl = parser.parse(req.getRequestURL(), req.getQueryString());
-    if (!restUrl.isValid()) {
-      resp.setStatus(SC_BAD_REQUEST); // Use restUrl.errorMessage() to debug
+    RestUrl url = parser.parse(req.getRequestURL(), req.getQueryString());
+    if (!url.isValid()) {
+      resp.setStatus(SC_BAD_REQUEST); // Use url.errorMessage() to debug
       return;
     }
 
-    String countryId = restUrl.variable("countryId");
-    Integer population = restUrl.variable("population");
+    String countryId = url.variable("countryId");
+    Integer population = url.variable("population");
     // Your code here
   }
 }
@@ -39,12 +39,23 @@ Example composing variables and using a regex:
   Integer yCoord = url.variable("num"); // 7
 ```
 
-See more usage examples in the [tests](https://bitbucket.org/danisola/url-restify/src/master/src/test/java/com/danisola/urlrestify/RestUrlTest.java).
+Example with String array:
+
+```
+  RestParser parser = parser("/users/{}?fields={}",
+          intVar("userId"), strArrayVar("fields"));
+
+  RestUrl url = parser.parse("http://www.network.com/users/31416?fields=name,age");
+  Integer userId = url.variable("userId"); // 31416
+  String[] fields = url.variable("fields"); // "name", "age"
+```
+
+See more usage examples in the [tests](https://bitbucket.org/danisola/url-restify/src/cc23f639d8f3/src/test/java/com/danisola/urlrestify).
 
 ## FAQ ##
 
 * **Why would I use URL-RESTify instead of Spring Framework or Jersey?** Sometimes we're forced to use plain Servlets or we just don't need all the features of a full-blown framework. Examples: when dealing with legacy web services or when creating projects for Google App Engine.
-* **Which variable types can I use?** Boolean, Double, Float, Integer, Long, String and UUID. It is also very easy to force String variables to match a given regex.
+* **Which variable types can I use?** Boolean, Double, Float, Integer, Long, String, UUID, String[] and Integer[]. It is also very easy to force String variables to match a given regex.
 * **Can I add more types?** Yes, you just have to extend AbstractVarType. Check this [package](https://bitbucket.org/danisola/url-restify/src/master/src/main/java/com/danisola/urlrestify/types) for examples.
 * **Is it fast?** This depends on many variables (hardware, JVM, etc.), but I would say that is fast enough. These are the [microbenchmark](https://bitbucket.org/danisola/url-restify/src/master/src/test/java/com/danisola/urlrestify/UrlRestifyBenchmark.java) results on my development machine:
 
