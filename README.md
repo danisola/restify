@@ -15,7 +15,7 @@ public class MyServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
-    RestUrl url = parser.parse(req.getRequestURL(), req.getQueryString());
+    RestUrl url = parser.parse(req.getRequestURI(), req.getQueryString());
     if (!url.isValid()) {
       resp.setStatus(SC_BAD_REQUEST); // Use url.errorMessage() to debug
       return;
