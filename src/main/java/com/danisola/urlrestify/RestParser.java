@@ -24,7 +24,6 @@ public class RestParser {
 
     public static RestParser parser(String pattern, VarType ... types) {
         checkPattern(pattern);
-        checkArgumentNotNullOrEmpty(types);
 
         final int numTypes = types.length;
         ParsedUrl parsedUrl = ParsedUrl.parseUrl(pattern);

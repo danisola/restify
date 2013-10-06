@@ -20,7 +20,7 @@ public class RestParserTest {
         parser("/countries/{}?city=lon", strVar("GB"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void whenNoTypesAreProvidedThenExceptionIsThrown() {
         parser("/country", null);
     }

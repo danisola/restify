@@ -17,13 +17,6 @@ public class Preconditions {
         return string;
     }
 
-    public static <T> T[] checkArgumentNotNullOrEmpty(T[] array) {
-        if (array == null || array.length == 0) {
-            throw new IllegalArgumentException("Argument cannot be null or empty");
-        }
-        return array;
-    }
-
     /**
      * Ensures that the given argument is not null
      *

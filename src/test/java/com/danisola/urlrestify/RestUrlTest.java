@@ -12,6 +12,7 @@ import static com.danisola.urlrestify.types.StrVar.regexStrVar;
 import static com.danisola.urlrestify.types.StrVar.strVar;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
 
 public class RestUrlTest {
 
@@ -43,6 +44,13 @@ public class RestUrlTest {
         RestUrl url = parser.parse("http://www.games.com/battleship/shoot?square=B7");
         assertThat((String) url.variable("char"), is("B"));
         assertThat((Integer) url.variable("num"), is(7));
+    }
+
+    @Test
+    public void whenNoVariablesAreProvidedThenOnlyThePathIsConsidered() {
+        RestParser parser = parser("/users");
+        RestUrl url = parser.parse("http://www.social-network.com/users");
+        assertTrue(url.isValid());
     }
 
     @Test
