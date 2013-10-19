@@ -11,10 +11,10 @@ import java.util.regex.Pattern;
 import static com.danisola.urlrestify.ParsedUrl.parseParams;
 import static com.danisola.urlrestify.RestUrl.invalidRestUrl;
 import static com.danisola.urlrestify.RestUrl.restUrl;
-import static com.danisola.urlrestify.preconditions.Preconditions.checkNotNull;
 
 /**
- * A URL parser that produces {@link ParsedUrl}.
+ * A URL parser that produces {@link ParsedUrl}. It does not throw any exceptions in case the parsed URLs are found to
+ * be incorrect, but the resulting {@link RestUrl} will be invalid.
  *
  * <p>Instances of this class are immutable and thus thread-safe.</p>
  */
@@ -32,21 +32,41 @@ public class RestParser {
         this.numVars = numVars;
     }
 
-    public RestUrl parse(String stringUrl) {
-        checkNotNull(stringUrl, "Url cannot be null");
+    /**
+     * Parses the given fully qualified URL.
+     *
+     * @return the {@link RestUrl} that represents the given URL.
+     */
+    public RestUrl parse(String url) {
+        if (url == null) {
+            return invalidRestUrl("Url is null");
+        }
+
         try {
-            return parse(new URL(stringUrl));
+            return parse(new URL(url));
         } catch (MalformedURLException e) {
-            throw new IllegalArgumentException(e);
+            return invalidRestUrl("Url is malformed");
         }
     }
 
+    /**
+     * Parses the given URL.
+     *
+     * @return the {@link RestUrl} that represents the given URL.
+     */
     public RestUrl parse(URL url) {
-        checkNotNull(url, "Url cannot be null");
+        if (url == null) {
+            return invalidRestUrl("Url is null");
+        }
         return parse(url.getPath(), url.getQuery());
     }
 
-    public RestUrl parse(CharSequence path, String queryString) {
+    /**
+     * Parses the given path and query.
+     *
+     * @return the {@link RestUrl} that represents the given URL.
+     */
+    public RestUrl parse(String path, String queryString) {
         if (path == null) {
             return invalidRestUrl("Url is null");
         }

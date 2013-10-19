@@ -10,10 +10,25 @@ import static com.danisola.urlrestify.preconditions.Preconditions.checkArgument;
 import static com.danisola.urlrestify.preconditions.Preconditions.checkArgumentNotNullOrEmpty;
 import static com.danisola.urlrestify.preconditions.Preconditions.checkState;
 
+/**
+ * Generates instances of {@link RestParser}.
+ */
 public class RestParserFactory {
 
     private static final String VAR_MARKER = "{}";
+    private static final Pattern MARKER_VALIDATOR = Pattern.compile(".*?(\\{[^\\}]|[^\\{]\\}).*?");
 
+    /**
+     * Generates a {@link RestParser} given a pattern and variable types. See usage examples in <a
+     * href="https://bitbucket.org/danisola/url-restify/">https://bitbucket.org/danisola/url-restify/</a>.
+     *
+     * <p>This method throws exceptions when the pattern or the variables are not correctly defined to enforce a
+     * correct usage of the API. However, cannot protect from all possible malformed patterns,
+     * make sure to test them.</p>
+     *
+     * @throws IllegalArgumentException if the pattern is malformed or if the pattern and types do not match
+     * @throws NullPointerException if the pattern or types are null
+     */
     public static RestParser parser(String pattern, VarType... types) {
         checkPattern(pattern);
 
@@ -75,6 +90,7 @@ public class RestParserFactory {
         checkArgumentNotNullOrEmpty(pattern);
         checkArgument(!pattern.endsWith("/"), "Patterns must not end with /");
         checkArgument(!pattern.contains("#"), "Patterns must not contain fragments (#)");
+        checkArgument(!MARKER_VALIDATOR.matcher(pattern).matches(), "Braces must be closed: {}");
     }
 
     private RestParserFactory() {

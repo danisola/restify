@@ -8,6 +8,7 @@ import static com.danisola.urlrestify.RestParserFactory.parser;
 import static com.danisola.urlrestify.matchers.IsInvalid.isInvalid;
 import static com.danisola.urlrestify.types.FloatVar.floatVar;
 import static com.danisola.urlrestify.types.IntVar.intVar;
+import static com.danisola.urlrestify.types.IntVar.posIntVar;
 import static com.danisola.urlrestify.types.StrVar.regexStrVar;
 import static com.danisola.urlrestify.types.StrVar.strVar;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -67,30 +68,46 @@ public class RestUrlTest {
         assertThat(url, isInvalid());
     }
 
-    @Test(expected = NullPointerException.class)
-    public void whenNoUrlIsPassedThenExceptionIsThrown() {
-        RestParser parser = parser("/country/{}", strVar("countryId"));
-        parser.parse((URL) null);
+    @Test
+    public void whenWrongUrlIsProvidedThenUrlIsInvalid() {
+        RestParser parser = parser("/leagues/{}/teams/{}/players/{}", strVar("leagueId"), strVar("teamId"), posIntVar("playerId"));
+        RestUrl url = parser.parse("www.football.com/leagues/seattle/teams/trebuchet/players/21");
+        assertThat(url, isInvalid());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
+    public void whenNoUrlIsPassedThenUrlIsInvalid() {
+        RestParser parser = parser("/country/{}", strVar("countryId"));
+        RestUrl url = parser.parse((URL) null);
+        assertThat(url, isInvalid());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void whenUnexistantVariableIsRequestedThenExceptionIsThrown() {
         RestParser parser = parser("/countries/{}", strVar("countryId"));
-        RestUrl restUrl = parser.parse("http://www.world.com/countries/uk");
-        restUrl.variable("cityId");
+        RestUrl url = parser.parse("http://www.world.com/countries/gb");
+        url.variable("cityId");
     }
 
     @Test(expected = ClassCastException.class)
     public void whenWrongTypeIsRequestedThenExceptionIsThrown() {
         RestParser parser = parser("/countries/{}", strVar("countryId"));
-        RestUrl restUrl = parser.parse("http://www.world.com/countries/uk");
-        Integer countryId = restUrl.variable("countryId");
+        RestUrl url = parser.parse("http://www.world.com/countries/gb");
+        Integer countryId = url.variable("countryId");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenNullKeyIsRequestedThenExceptionIsThrown() {
         RestParser parser = parser("/countries/{}", strVar("countryId"));
-        RestUrl restUrl = parser.parse("http://www.world.com/countries/uk");
-        restUrl.variable(null);
+        RestUrl url = parser.parse("http://www.world.com/countries/gb");
+        url.variable(null);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void whenAccessingVariablesAndUrlIsInvalidThenExceptionIsThrown() {
+        RestParser parser = parser("/countries/{}", strVar("countryId"));
+        RestUrl url = parser.parse("http://www.world.com/");
+        assertThat(url, isInvalid());
+        url.variable("countryId");
     }
 }
