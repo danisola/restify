@@ -46,6 +46,6 @@ public class RestUrl {
                 return (T) values[i];
             }
         }
-        throw new IllegalStateException("Variable id '" + variableId + "' has not declared in the pattern");
+        throw new IllegalStateException("Variable id '" + variableId + "' is not declared in the pattern");
     }
 }

@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.util.UUID;
 
-import static com.danisola.urlrestify.RestParser.parser;
+import static com.danisola.urlrestify.RestParserFactory.parser;
 import static com.danisola.urlrestify.types.UuidVar.uuidVar;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

@@ -4,7 +4,7 @@ import com.danisola.urlrestify.RestParser;
 import com.danisola.urlrestify.RestUrl;
 import org.junit.Test;
 
-import static com.danisola.urlrestify.RestParser.parser;
+import static com.danisola.urlrestify.RestParserFactory.parser;
 import static com.danisola.urlrestify.matchers.IsInvalid.isInvalid;
 import static com.danisola.urlrestify.types.IntArrayVar.intArrayVar;
 import static org.hamcrest.Matchers.is;

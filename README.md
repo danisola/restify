@@ -1,6 +1,6 @@
 # URL-RESTify #
 
-URL-RESTify is a lightweight library (18KB!) to easily validate and access the variables of any RESTful URL.
+URL-RESTify is a lightweight library (19KB!) to easily validate and access the variables of any RESTful URL.
 
 ## Usage ##
 
@@ -61,8 +61,8 @@ See more usage examples in the [tests](https://bitbucket.org/danisola/url-restif
 
 ```
      benchmark   us linear runtime
-CreatingParser 6.81 ==============================
-       Parsing 1.67 =======
+CreatingParser 6.99 ==============================
+       Parsing 1.56 ======
 ```
 
 
@@ -73,4 +73,4 @@ You require the following:
 * Latest stable  JDK 7
 * Latest stable Apache Maven
 
-Just download the code and do `mvn clean install`. You will find the jar file inside `target/`.
+Just download the code and do `mvn clean package`. You will find the jar file inside `target/`.

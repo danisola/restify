@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.danisola.urlrestify.preconditions.Preconditions.checkArgumentNotNullOrEmpty;
 import static com.danisola.urlrestify.preconditions.Preconditions.checkState;
 
 class ParsedUrl {
@@ -65,22 +64,4 @@ class ParsedUrl {
         return pairs;
     }
 
-    static class NameValuePair {
-
-        private final String name;
-        private final String value;
-
-        public NameValuePair(String name, String value) {
-            this.name = checkArgumentNotNullOrEmpty(name);
-            this.value = value;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getValue() {
-            return value;
-        }
-    }
 }

@@ -4,7 +4,7 @@ import com.google.caliper.Runner;
 import com.google.caliper.SimpleBenchmark;
 
 import static com.danisola.urlrestify.types.IntVar.posIntVar;
-import static com.danisola.urlrestify.RestParser.parser;
+import static com.danisola.urlrestify.RestParserFactory.parser;
 import static com.danisola.urlrestify.types.StrVar.strVar;
 
 public class UrlRestifyBenchmark extends SimpleBenchmark {

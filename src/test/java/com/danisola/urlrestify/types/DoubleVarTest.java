@@ -4,7 +4,7 @@ import com.danisola.urlrestify.RestUrl;
 import com.danisola.urlrestify.RestParser;
 import org.junit.Test;
 
-import static com.danisola.urlrestify.RestParser.parser;
+import static com.danisola.urlrestify.RestParserFactory.parser;
 import static com.danisola.urlrestify.types.DoubleVar.doubleVar;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

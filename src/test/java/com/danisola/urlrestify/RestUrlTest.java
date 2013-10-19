@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.net.URL;
 
-import static com.danisola.urlrestify.RestParser.parser;
+import static com.danisola.urlrestify.RestParserFactory.parser;
 import static com.danisola.urlrestify.matchers.IsInvalid.isInvalid;
 import static com.danisola.urlrestify.types.FloatVar.floatVar;
 import static com.danisola.urlrestify.types.IntVar.intVar;

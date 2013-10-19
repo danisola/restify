@@ -3,8 +3,8 @@ package com.danisola.urlrestify;
 
 import org.junit.Test;
 
+import static com.danisola.urlrestify.RestParserFactory.parser;
 import static com.danisola.urlrestify.types.IntVar.posIntVar;
-import static com.danisola.urlrestify.RestParser.parser;
 import static com.danisola.urlrestify.types.StrVar.strVar;
 
 public class RestParserTest {
