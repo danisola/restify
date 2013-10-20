@@ -6,6 +6,7 @@ import java.net.URL;
 
 import static com.danisola.urlrestify.RestParserFactory.parser;
 import static com.danisola.urlrestify.matchers.IsInvalid.isInvalid;
+import static com.danisola.urlrestify.matchers.IsValid.isValid;
 import static com.danisola.urlrestify.types.FloatVar.floatVar;
 import static com.danisola.urlrestify.types.IntVar.intVar;
 import static com.danisola.urlrestify.types.IntVar.posIntVar;
@@ -22,6 +23,7 @@ public class RestUrlTest {
         RestParser parser = parser("/{}/{}?float={}&str={}&int={}",
                 strVar("first"), strVar("second"), floatVar("float"), strVar("str"), intVar("int"));
         RestUrl url = parser.parse("http://www.example.com/a/b?float=3.14&str=pi&int=3");
+        assertThat(url, isValid());
         assertThat((String) url.variable("first"), is("a"));
         assertThat((String) url.variable("second"), is("b"));
         assertThat((Float) url.variable("float"), is(3.14f));
@@ -34,6 +36,7 @@ public class RestUrlTest {
         RestParser parser = parser("/servers/{}-{}/restart",
                 strVar("environment"), intVar("id"));
         RestUrl url = parser.parse("http://www.company.com/servers/prod-3/restart");
+        assertThat(url, isValid());
         assertThat((String) url.variable("environment"), is("prod"));
         assertThat((Integer) url.variable("id"), is(3));
     }
@@ -43,6 +46,7 @@ public class RestUrlTest {
         RestParser parser = parser("/battleship/shoot?square={}{}",
                 regexStrVar("char", "[A-L]"), intVar("num"));
         RestUrl url = parser.parse("http://www.games.com/battleship/shoot?square=B7");
+        assertThat(url, isValid());
         assertThat((String) url.variable("char"), is("B"));
         assertThat((Integer) url.variable("num"), is(7));
     }
@@ -51,6 +55,7 @@ public class RestUrlTest {
     public void whenNoVariablesAreProvidedThenOnlyThePathIsConsidered() {
         RestParser parser = parser("/users");
         RestUrl url = parser.parse("http://www.social-network.com/users");
+        assertThat(url, isValid());
         assertTrue(url.isValid());
     }
 
@@ -58,6 +63,7 @@ public class RestUrlTest {
     public void whenThereAreExtraParametersThenSpecifiedOnesAreCorrect() {
         RestParser parser = parser("/users?id={}", strVar("userId"));
         RestUrl url = parser.parse("http://www.mail.com/users?cache_buster=4f0ce72&id=ben");
+        assertThat(url, isValid());
         assertThat((String) url.variable("userId"), is("ben"));
     }
 
@@ -86,6 +92,7 @@ public class RestUrlTest {
     public void whenUnexistantVariableIsRequestedThenExceptionIsThrown() {
         RestParser parser = parser("/countries/{}", strVar("countryId"));
         RestUrl url = parser.parse("http://www.world.com/countries/gb");
+        assertThat(url, isValid());
         url.variable("cityId");
     }
 
@@ -93,6 +100,7 @@ public class RestUrlTest {
     public void whenWrongTypeIsRequestedThenExceptionIsThrown() {
         RestParser parser = parser("/countries/{}", strVar("countryId"));
         RestUrl url = parser.parse("http://www.world.com/countries/gb");
+        assertThat(url, isValid());
         Integer countryId = url.variable("countryId");
     }
 
@@ -100,6 +108,7 @@ public class RestUrlTest {
     public void whenNullKeyIsRequestedThenExceptionIsThrown() {
         RestParser parser = parser("/countries/{}", strVar("countryId"));
         RestUrl url = parser.parse("http://www.world.com/countries/gb");
+        assertThat(url, isValid());
         url.variable(null);
     }
 

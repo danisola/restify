@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static com.danisola.urlrestify.RestParserFactory.parser;
 import static com.danisola.urlrestify.matchers.IsInvalid.isInvalid;
+import static com.danisola.urlrestify.matchers.IsValid.isValid;
 import static com.danisola.urlrestify.types.IntVar.intVar;
 import static com.danisola.urlrestify.types.StrArrayVar.strArrayVar;
 import static org.hamcrest.Matchers.is;
@@ -17,6 +18,7 @@ public class StrArrayVarTest {
     public void whenValueIsCorrectThenStringArrayIsReturned() {
         RestParser parser = parser("/users/{}?fields={}", intVar("userId"), strArrayVar("fields"));
         RestUrl url = parser.parse("http://www.network.com/users/435?fields=name,age&ts=9379");
+        assertThat(url, isValid());
         assertThat((String[]) url.variable("fields"), is(new String[] {"name", "age"}));
     }
 

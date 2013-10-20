@@ -18,20 +18,6 @@ public class Preconditions {
     }
 
     /**
-     * Ensures that the given argument is not null
-     *
-     * @param argument an object reference
-     * @param errorMessage the exception message to use if the check fails
-     * @throws NullPointerException if {@code argument} is null
-     */
-    public static <T> T checkNotNull(T argument, String errorMessage) {
-        if (argument == null) {
-            throw new NullPointerException(errorMessage);
-        }
-        return argument;
-    }
-
-    /**
      * Ensures the truth of an expression
      *
      * @param expression a boolean expression

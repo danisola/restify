@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static com.danisola.urlrestify.RestParserFactory.parser;
 import static com.danisola.urlrestify.matchers.IsInvalid.isInvalid;
+import static com.danisola.urlrestify.matchers.IsValid.isValid;
 import static com.danisola.urlrestify.types.LongVar.longVar;
 import static com.danisola.urlrestify.types.LongVar.posLongVar;
 import static org.hamcrest.Matchers.is;
@@ -17,6 +18,7 @@ public class LongVarTest {
     public void whenNegLongIsCorrectThenLongIsReturned() {
         RestParser parser = parser("/users/{}", longVar("userId"));
         RestUrl url = parser.parse("http://www.mail.com/users/-9223372036854775807");
+        assertThat(url, isValid());
         assertThat((Long) url.variable("userId"), is(-9223372036854775807L));
     }
 
@@ -31,6 +33,7 @@ public class LongVarTest {
     public void whenPosLongIsCorrectThenLongIsReturned() {
         RestParser parser = parser("/users/{}", posLongVar("userId"));
         RestUrl url = parser.parse("http://www.mail.com/users/9223372036854775807");
+        assertThat(url, isValid());
         assertThat((Long) url.variable("userId"), is(9223372036854775807L));
     }
 }

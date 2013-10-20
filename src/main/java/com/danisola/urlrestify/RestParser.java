@@ -92,31 +92,26 @@ public class RestParser {
 
         // Processing param variables
         List<NameValuePair> valuePairs = parseParams(queryString);
-        for (int paramIndex = 0; paramIndex < paramVars.length; paramIndex++) {
-
-            ParamVar paramVar = paramVars[paramIndex];
-            NameValuePair valuePair = getValuePairWithName(paramVar.getName(), valuePairs);
+        for (ParamVar paramVar : paramVars) {
+            String paramName = paramVar.getName();
+            NameValuePair valuePair = getValuePairWithName(paramName, valuePairs);
             if (valuePair == null) {
-                return invalidRestUrl("Parameter '" + paramVar.getName() + "' has not been found");
+                return invalidRestUrl("Parameter '" + paramName + "' has not been found");
             }
 
-            Matcher paramMatcher = paramVar.getValuePattern().matcher(valuePair.getValue());
-            if (paramMatcher.matches()) {
-                VarType[] paramTypes = paramVar.getTypes();
-                for (int varParamIndex = 0; varParamIndex < paramTypes.length; varParamIndex++) {
-                    VarType paramType = paramTypes[varParamIndex];
-                    varTypes[varIndex] = paramType;
-                    try {
-                        varValues[varIndex] = paramType.convert(paramMatcher.group(paramType.getId()));
-                    } catch (Exception ex) {
-                        return invalidRestUrl("Invalid parameter value '" + paramVar.getName() +
-                                "=" + valuePair.getValue() + "'");
-                    }
-                    varIndex++;
+            Pattern paramValuePattern = paramVar.getValuePattern();
+            Matcher paramMatcher = paramValuePattern.matcher(valuePair.getValue());
+            if (!paramMatcher.matches()) {
+                return invalidRestUrl("Parameter '" + paramName + "' does not match pattern " + paramValuePattern);
+            }
+            for (VarType paramType : paramVar.getTypes()) {
+                varTypes[varIndex] = paramType;
+                try {
+                    varValues[varIndex] = paramType.convert(paramMatcher.group(paramType.getId()));
+                } catch (Exception ex) {
+                    return invalidRestUrl("Invalid parameter value '" + paramName + "=" + valuePair.getValue() + "'");
                 }
-            } else {
-                return invalidRestUrl("Parameter '" + paramVar.getName() +
-                        "' does not match the pattern '" + paramVar.getValuePattern() + "'");
+                varIndex++;
             }
         }
 

@@ -5,6 +5,7 @@ import com.danisola.urlrestify.RestParser;
 import org.junit.Test;
 
 import static com.danisola.urlrestify.RestParserFactory.parser;
+import static com.danisola.urlrestify.matchers.IsValid.isValid;
 import static com.danisola.urlrestify.types.DoubleVar.doubleVar;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -16,6 +17,7 @@ public class DoubleVarTest {
         RestParser parser = parser("/users/{}", doubleVar("userId"));
         Double userId = Double.MAX_VALUE;
         RestUrl url = parser.parse("http://www.mail.com/users/" + userId);
+        assertThat(url, isValid());
         assertThat((Double) url.variable("userId"), is(userId));
     }
 }

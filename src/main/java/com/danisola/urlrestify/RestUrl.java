@@ -61,8 +61,7 @@ public class RestUrl {
      *
      * <p>This method throws exceptions to enforce a correct usage of the API.</p>
      *
-     * @throws IllegalArgumentException if the specified variable is null or empty
-     * @throws IllegalArgumentException if the variableId is not defined in the {@link RestParser}
+     * @throws IllegalArgumentException if variableId is null, empty or not defined in the {@link RestParser}
      * @throws IllegalStateException if the URL is invalid ({@link #isValid()} is false)
      * @throws ClassCastException if the returned variable has not the same type as the declared variable in {@link RestParser}
      */
