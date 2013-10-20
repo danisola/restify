@@ -61,8 +61,8 @@ See more usage examples in the [tests](https://bitbucket.org/danisola/url-restif
 
 ```
      benchmark   us linear runtime
-CreatingParser 6.99 ==============================
-       Parsing 1.56 ======
+CreatingParser 9.70 ==============================
+       Parsing 1.47 ====
 ```
 
 
