@@ -1,17 +1,19 @@
 package com.danisola.urlrestify.types;
 
+import static com.danisola.urlrestify.preconditions.Preconditions.checkArgumentNotNullOrEmpty;
+
 public class StrArrayVar extends AbstractVarType<String[]> {
 
     public static StrArrayVar strArrayVar(String id) {
-        return new StrArrayVar(id, "[^/,\\#]+(,[^/,\\#]+)*");
+        return new StrArrayVar(id);
     }
 
-    private StrArrayVar(String id, String pattern) {
-        super(id, pattern);
+    private StrArrayVar(String id) {
+        super(id);
     }
 
     @Override
     public String[] convert(String value) {
-        return value.split(",");
+        return checkArgumentNotNullOrEmpty(value).split(",");
     }
 }

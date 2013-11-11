@@ -7,6 +7,10 @@ public abstract class AbstractVarType<T> implements VarType<T> {
     private final String id;
     private final String groupPatternStr;
 
+    protected AbstractVarType(String id) {
+        this(id, ".*?");
+    }
+
     protected AbstractVarType(String id, String pattern) {
         this.id = checkArgumentNotNullOrEmpty(id);
         checkArgumentNotNullOrEmpty(pattern);

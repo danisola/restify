@@ -8,7 +8,6 @@ import static com.danisola.urlrestify.RestParserFactory.parser;
 import static com.danisola.urlrestify.matchers.IsInvalid.isInvalid;
 import static com.danisola.urlrestify.matchers.IsValid.isValid;
 import static com.danisola.urlrestify.types.IntVar.intVar;
-import static com.danisola.urlrestify.types.IntVar.posIntVar;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -22,12 +21,12 @@ public class IntVarTest {
         assertThat((Integer) url.variable("userId"), is(-2397));
     }
 
-    @Test
+    /*@Test
     public void whenNegIntIsNotExpectedThenUrlIsInvalid() {
         RestParser parser = parser("/users/{}", posIntVar("userId"));
         RestUrl url = parser.parse("http://www.mail.com/users/-2397");
         assertThat(url, isInvalid());
-    }
+    }*/
 
     @Test
     public void whenValueIsTooBigThenUrlIsInvalid() {

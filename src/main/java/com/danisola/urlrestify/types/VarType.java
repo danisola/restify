@@ -7,5 +7,5 @@ public interface VarType<T> {
 
     public String getGroupPattern();
 
-    public T convert(String value);
+    public T convert(String value) throws Exception;
 }

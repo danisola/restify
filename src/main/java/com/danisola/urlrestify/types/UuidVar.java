@@ -9,7 +9,7 @@ public class UuidVar extends AbstractVarType<UUID> {
     }
 
     private UuidVar(String id) {
-        super(id, "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
+        super(id);
     }
 
     @Override

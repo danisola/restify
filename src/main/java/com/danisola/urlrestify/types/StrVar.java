@@ -1,13 +1,19 @@
 package com.danisola.urlrestify.types;
 
+import static com.danisola.urlrestify.preconditions.Preconditions.checkArgumentNotNullOrEmpty;
+
 public class StrVar extends AbstractVarType<String> {
 
-    public static StrVar regexStrVar(String id, String regex) {
+    public static StrVar strVar(String id) {
+        return new StrVar(id);
+    }
+
+    public static StrVar strVar(String id, String regex) {
         return new StrVar(id, regex);
     }
 
-    public static StrVar strVar(String id) {
-        return new StrVar(id, "[^/\\#]+");
+    private StrVar(String id) {
+        super(id);
     }
 
     private StrVar(String id, String pattern) {
@@ -16,6 +22,6 @@ public class StrVar extends AbstractVarType<String> {
 
     @Override
     public String convert(String value) {
-        return value;
+        return checkArgumentNotNullOrEmpty(value);
     }
 }

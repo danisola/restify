@@ -3,11 +3,15 @@ package com.danisola.urlrestify.types;
 public class LongVar extends AbstractVarType<Long> {
 
     public static LongVar longVar(String id) {
-        return new LongVar(id, "[-]?\\d+");
+        return new LongVar(id);
     }
 
-    public static LongVar posLongVar(String id) {
-        return new LongVar(id, "\\d+");
+    public static LongVar longVar(String id, String pattern) {
+        return new LongVar(id, pattern);
+    }
+
+    private LongVar(String id) {
+        super(id);
     }
 
     private LongVar(String id, String pattern) {

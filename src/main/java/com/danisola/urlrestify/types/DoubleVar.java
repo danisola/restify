@@ -7,7 +7,7 @@ public class DoubleVar extends AbstractVarType<Double> {
     }
 
     private DoubleVar(String id) {
-        super(id, "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?");
+        super(id);
     }
 
     @Override

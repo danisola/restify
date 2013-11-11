@@ -86,7 +86,7 @@ public class RestParser {
             try {
                 varValues[varIndex] = type.convert(matcher.group(type.getId()));
             } catch (Exception ex) {
-                return invalidRestUrl("Invalid value for variable '" + type.getId() + "' in '" + path + "'");
+                return invalidRestUrl("Invalid value for variable '" + type.getId() + "'.");
             }
         }
 

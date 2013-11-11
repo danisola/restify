@@ -9,8 +9,7 @@ import static com.danisola.urlrestify.matchers.IsInvalid.isInvalid;
 import static com.danisola.urlrestify.matchers.IsValid.isValid;
 import static com.danisola.urlrestify.types.FloatVar.floatVar;
 import static com.danisola.urlrestify.types.IntVar.intVar;
-import static com.danisola.urlrestify.types.IntVar.posIntVar;
-import static com.danisola.urlrestify.types.StrVar.regexStrVar;
+import static com.danisola.urlrestify.types.StrVar.strVar;
 import static com.danisola.urlrestify.types.StrVar.strVar;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -44,7 +43,7 @@ public class RestUrlTest {
     @Test
     public void whenCompositeParamsAreDefinedThenItsValuesAreCorrect() {
         RestParser parser = parser("/battleship/shoot?square={}{}",
-                regexStrVar("char", "[A-L]"), intVar("num"));
+                strVar("char", "[A-L]"), intVar("num"));
         RestUrl url = parser.parse("http://www.games.com/battleship/shoot?square=B7");
         assertThat(url, isValid());
         assertThat((String) url.variable("char"), is("B"));
@@ -76,7 +75,7 @@ public class RestUrlTest {
 
     @Test
     public void whenWrongUrlIsProvidedThenUrlIsInvalid() {
-        RestParser parser = parser("/leagues/{}/teams/{}/players/{}", strVar("leagueId"), strVar("teamId"), posIntVar("playerId"));
+        RestParser parser = parser("/leagues/{}/teams/{}/players/{}", strVar("leagueId"), strVar("teamId"), intVar("playerId"));
         RestUrl url = parser.parse("www.football.com/leagues/seattle/teams/trebuchet/players/21");
         assertThat(url, isInvalid());
     }

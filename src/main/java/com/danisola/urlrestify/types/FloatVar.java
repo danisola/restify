@@ -7,7 +7,7 @@ public class FloatVar extends AbstractVarType<Float> {
     }
 
     private FloatVar(String id) {
-        super(id, "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?");
+        super(id);
     }
 
     @Override

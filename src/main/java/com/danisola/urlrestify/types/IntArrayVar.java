@@ -3,11 +3,11 @@ package com.danisola.urlrestify.types;
 public class IntArrayVar extends AbstractVarType<Integer[]> {
 
     public static IntArrayVar intArrayVar(String id) {
-        return new IntArrayVar(id, "[-]?\\d+(,[-]?\\d+)*");
+        return new IntArrayVar(id);
     }
 
-    private IntArrayVar(String id, String pattern) {
-        super(id, pattern);
+    private IntArrayVar(String id) {
+        super(id);
     }
 
     @Override
