@@ -83,10 +83,11 @@ public class RestParser {
         for (; varIndex < pathTypes.length; varIndex++) {
             VarType type = pathTypes[varIndex];
             varTypes[varIndex] = type;
+            String value = matcher.group(type.getId());
             try {
-                varValues[varIndex] = type.convert(matcher.group(type.getId()));
+                varValues[varIndex] = type.convert(value);
             } catch (Exception ex) {
-                return invalidRestUrl("Invalid value for variable '" + type.getId() + "'.");
+                return invalidRestUrl("Invalid value for variable '" + type.getId() + "': " + value);
             }
         }
 
@@ -109,7 +110,7 @@ public class RestParser {
                 try {
                     varValues[varIndex] = paramType.convert(paramMatcher.group(paramType.getId()));
                 } catch (Exception ex) {
-                    return invalidRestUrl("Invalid parameter value '" + paramName + "=" + valuePair.getValue() + "'");
+                    return invalidRestUrl("Invalid value for variable '" + paramName + "': " + valuePair.getValue());
                 }
                 varIndex++;
             }

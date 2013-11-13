@@ -13,7 +13,7 @@ public class MyServlet extends HttpServlet {
           strVar("countryId"), intVar("population"));
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
 
     RestUrl url = parser.parse(req.getRequestURI(), req.getQueryString());
     if (!url.isValid()) {
