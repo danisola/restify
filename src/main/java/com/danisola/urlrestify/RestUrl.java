@@ -13,27 +13,21 @@ import static com.danisola.urlrestify.preconditions.Preconditions.checkState;
  */
 public class RestUrl {
 
-    private final VarType[] types;
-    private final Object[] values;
-    private final String errorMessage;
+    final String errorMessage;
+    final VarType[] types;
+    final Object[] values;
 
     static RestUrl invalidRestUrl(String errorMsg) {
-        return new RestUrl(errorMsg);
+        return new RestUrl(null, null, errorMsg);
     }
 
     static RestUrl restUrl(VarType[] types, Object[] values) {
-        return new RestUrl(types, values);
+        return new RestUrl(types, values, null);
     }
 
-    private RestUrl(VarType[] types, Object[] values) {
+    private RestUrl(VarType[] types, Object[] values, String errorMsg) {
         this.types = types;
         this.values = values;
-        this.errorMessage = null;
-    }
-
-    private RestUrl(String errorMsg) {
-        this.types = null;
-        this.values = null;
         this.errorMessage = errorMsg;
     }
 

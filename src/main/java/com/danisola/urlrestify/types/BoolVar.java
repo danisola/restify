@@ -11,7 +11,7 @@ public class BoolVar extends AbstractVarType<Boolean> {
     }
 
     private BoolVar(String id) {
-        super(id, "(?i:true|false)");
+        super(id);
     }
 
     private BoolVar(String id, String regex) {

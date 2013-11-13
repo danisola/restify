@@ -46,7 +46,8 @@ class ParsedUrl {
 
         List<NameValuePair> pairs = new ArrayList<>();
         int startIndex = 0;
-        while (startIndex < query.length()) {
+        int queryLength = query.length();
+        while (startIndex < queryLength) {
             int equalsIndex = query.indexOf("=", startIndex);
             checkState(equalsIndex > 0, "Parameters are not well formatted: %s", query);
             String paramName = query.substring(startIndex, equalsIndex);
@@ -57,11 +58,10 @@ class ParsedUrl {
                 startIndex = andIndex + 1;
             } else {
                 paramValue = query.substring(equalsIndex + 1);
-                startIndex = query.length();
+                startIndex = queryLength;
             }
             pairs.add(new NameValuePair(paramName, paramValue));
         }
         return pairs;
     }
-
 }

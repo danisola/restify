@@ -5,7 +5,7 @@ import static com.danisola.urlrestify.preconditions.Preconditions.checkArgumentN
 public abstract class AbstractVarType<T> implements VarType<T> {
 
     private final String id;
-    private final String groupPatternStr;
+    private final String varPatternStr;
 
     protected AbstractVarType(String id) {
         this(id, ".*?");
@@ -13,8 +13,7 @@ public abstract class AbstractVarType<T> implements VarType<T> {
 
     protected AbstractVarType(String id, String pattern) {
         this.id = checkArgumentNotNullOrEmpty(id);
-        checkArgumentNotNullOrEmpty(pattern);
-        this.groupPatternStr = String.format("(?<%s>%s)", id, pattern);
+        this.varPatternStr = String.format("(?<%s>%s)", id, checkArgumentNotNullOrEmpty(pattern));
     }
 
     @Override
@@ -23,7 +22,7 @@ public abstract class AbstractVarType<T> implements VarType<T> {
     }
 
     @Override
-    public String getGroupPattern() {
-        return groupPatternStr;
+    public String getVarPattern() {
+        return varPatternStr;
     }
 }

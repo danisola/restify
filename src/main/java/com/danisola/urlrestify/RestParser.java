@@ -1,5 +1,6 @@
 package com.danisola.urlrestify;
 
+import com.danisola.urlrestify.types.Opt;
 import com.danisola.urlrestify.types.VarType;
 
 import java.net.MalformedURLException;
@@ -71,23 +72,20 @@ public class RestParser {
             return invalidRestUrl("Url is null");
         }
 
+        RestUrl restUrl = restUrl(new VarType[numVars], new Object[numVars]);
+        int varIndex = 0;
+
         // Processing path variables
-        Matcher matcher = pathPattern.matcher(path);
-        if (!matcher.matches()) {
+        Matcher pathMatcher = pathPattern.matcher(path);
+        if (!pathMatcher.matches()) {
             return invalidRestUrl("Path '" + path + "' does not match the pattern '" + pathPattern + "'");
         }
 
-        Object[] varValues = new Object[numVars];
-        VarType[] varTypes = new VarType[numVars];
-        int varIndex = 0;
-        for (; varIndex < pathTypes.length; varIndex++) {
-            VarType type = pathTypes[varIndex];
-            varTypes[varIndex] = type;
-            String value = matcher.group(type.getId());
+        for (VarType type : pathTypes) {
             try {
-                varValues[varIndex] = type.convert(value);
+                varIndex = extract(pathMatcher, type, varIndex, restUrl);
             } catch (Exception ex) {
-                return invalidRestUrl("Invalid value for variable '" + type.getId() + "': " + value);
+                return invalidRestUrl("Invalid value for variable '" + type.getId() + "': " + pathMatcher.group(type.getId()));
             }
         }
 
@@ -97,26 +95,29 @@ public class RestParser {
             String paramName = paramVar.getName();
             NameValuePair valuePair = getValuePairWithName(paramName, valuePairs);
             if (valuePair == null) {
-                return invalidRestUrl("Parameter '" + paramName + "' has not been found");
+                if (areOptional(paramVar.getTypes())) {
+                    varIndex = setNull(paramVar.getTypes(), varIndex, restUrl);
+                    continue;
+                } else {
+                    return invalidRestUrl("Parameter '" + paramName + "' was not set");
+                }
             }
 
-            Pattern paramValuePattern = paramVar.getValuePattern();
-            Matcher paramMatcher = paramValuePattern.matcher(valuePair.getValue());
+            String paramValue = valuePair.getValue();
+            Matcher paramMatcher = paramVar.getValuePattern().matcher(paramValue);
             if (!paramMatcher.matches()) {
-                return invalidRestUrl("Parameter '" + paramName + "' does not match pattern " + paramValuePattern);
+                return invalidRestUrl("Parameter '" + paramName + "=" + paramValue + "' does not match pattern");
             }
             for (VarType paramType : paramVar.getTypes()) {
-                varTypes[varIndex] = paramType;
                 try {
-                    varValues[varIndex] = paramType.convert(paramMatcher.group(paramType.getId()));
+                    varIndex = extract(paramMatcher, paramType, varIndex, restUrl);
                 } catch (Exception ex) {
-                    return invalidRestUrl("Invalid value for variable '" + paramName + "': " + valuePair.getValue());
+                    return invalidRestUrl("Invalid value for variable '" + paramName + "': " + paramValue);
                 }
-                varIndex++;
             }
         }
 
-        return restUrl(varTypes, varValues);
+        return restUrl;
     }
 
     private NameValuePair getValuePairWithName(String name, List<NameValuePair> params) {
@@ -126,5 +127,30 @@ public class RestParser {
             }
         }
         return null;
+    }
+
+    private boolean areOptional(VarType[] varTypes) {
+        for (VarType varType : varTypes) {
+            if (!(varType instanceof Opt)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private int extract(Matcher matcher, VarType type, int varIndex, RestUrl restUrl) throws Exception {
+        String value = matcher.group(type.getId());
+        restUrl.values[varIndex] = type.convert(value);
+        restUrl.types[varIndex] = type;
+        return ++varIndex;
+    }
+
+    private int setNull(VarType[] types, int varIndex, RestUrl restUrl) {
+        for (VarType type : types) {
+            restUrl.values[varIndex] = null;
+            restUrl.types[varIndex] = type;
+            varIndex++;
+        }
+        return varIndex;
     }
 }

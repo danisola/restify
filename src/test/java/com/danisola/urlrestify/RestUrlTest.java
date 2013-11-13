@@ -10,7 +10,6 @@ import static com.danisola.urlrestify.matchers.IsValid.isValid;
 import static com.danisola.urlrestify.types.FloatVar.floatVar;
 import static com.danisola.urlrestify.types.IntVar.intVar;
 import static com.danisola.urlrestify.types.StrVar.strVar;
-import static com.danisola.urlrestify.types.StrVar.strVar;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertTrue;
@@ -43,7 +42,7 @@ public class RestUrlTest {
     @Test
     public void whenCompositeParamsAreDefinedThenItsValuesAreCorrect() {
         RestParser parser = parser("/battleship/shoot?square={}{}",
-                strVar("char", "[A-L]"), intVar("num"));
+                strVar("char", "[A-L]"), intVar("num", "[0-9]"));
         RestUrl url = parser.parse("http://www.games.com/battleship/shoot?square=B7");
         assertThat(url, isValid());
         assertThat((String) url.variable("char"), is("B"));
