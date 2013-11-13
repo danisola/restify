@@ -1,10 +1,11 @@
 package com.danisola.urlrestify.types;
 
-import com.danisola.urlrestify.RestUrl;
 import com.danisola.urlrestify.RestParser;
+import com.danisola.urlrestify.RestUrl;
 import org.junit.Test;
 
 import static com.danisola.urlrestify.RestParserFactory.parser;
+import static com.danisola.urlrestify.matchers.IsInvalid.isInvalid;
 import static com.danisola.urlrestify.matchers.IsValid.isValid;
 import static com.danisola.urlrestify.types.DoubleVar.doubleVar;
 import static org.hamcrest.Matchers.is;
@@ -19,5 +20,12 @@ public class DoubleVarTest {
         RestUrl url = parser.parse("http://www.mail.com/users/" + userId);
         assertThat(url, isValid());
         assertThat((Double) url.variable("userId"), is(userId));
+    }
+
+    @Test
+    public void whenVariableIsEmptyThenUrlIsInvalid() {
+        RestParser parser = parser("/users/{}", doubleVar("userId"));
+        RestUrl url = parser.parse("http://www.mail.com/users/");
+        assertThat(url, isInvalid());
     }
 }

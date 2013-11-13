@@ -6,16 +6,16 @@ public class LongVar extends AbstractVarType<Long> {
         return new LongVar(id);
     }
 
-    public static LongVar longVar(String id, String pattern) {
-        return new LongVar(id, pattern);
+    public static LongVar longVar(String id, String regex) {
+        return new LongVar(id, regex);
     }
 
     private LongVar(String id) {
         super(id);
     }
 
-    private LongVar(String id, String pattern) {
-        super(id, pattern);
+    private LongVar(String id, String regex) {
+        super(id, regex);
     }
 
     @Override

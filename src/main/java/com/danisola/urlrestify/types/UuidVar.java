@@ -8,8 +8,16 @@ public class UuidVar extends AbstractVarType<UUID> {
         return new UuidVar(id);
     }
 
+    public static UuidVar uuidVar(String id, String regex) {
+        return new UuidVar(id, regex);
+    }
+
     private UuidVar(String id) {
         super(id);
+    }
+
+    private UuidVar(String id, String regex) {
+        super(id, regex);
     }
 
     @Override

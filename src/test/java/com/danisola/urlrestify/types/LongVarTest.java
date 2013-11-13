@@ -27,4 +27,11 @@ public class LongVarTest {
         RestUrl url = parser.parse("http://www.mail.com/users/-92233720368.54775807");
         assertThat(url, isInvalid());
     }
+
+    @Test
+    public void whenVariableIsEmptyThenUrlIsInvalid() {
+        RestParser parser = parser("/users/{}", longVar("userId"));
+        RestUrl url = parser.parse("http://www.mail.com/users/");
+        assertThat(url, isInvalid());
+    }
 }

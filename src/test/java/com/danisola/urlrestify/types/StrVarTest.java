@@ -8,7 +8,6 @@ import static com.danisola.urlrestify.RestParserFactory.parser;
 import static com.danisola.urlrestify.matchers.IsInvalid.isInvalid;
 import static com.danisola.urlrestify.matchers.IsValid.isValid;
 import static com.danisola.urlrestify.types.StrVar.strVar;
-import static com.danisola.urlrestify.types.StrVar.strVar;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -20,6 +19,13 @@ public class StrVarTest {
         RestUrl url = parser.parse("http://www.world.com/country/99/cities");
         assertThat(url, isValid());
         assertThat((String) url.variable("countryId"), is("99"));
+    }
+
+    @Test
+    public void whenVariableIsEmptyThenUrlIsInvalid() {
+        RestParser parser = parser("/country/{}/cities", strVar("countryId"));
+        RestUrl url = parser.parse("http://www.world.com/country//cities");
+        assertThat(url, isInvalid());
     }
 
     @Test

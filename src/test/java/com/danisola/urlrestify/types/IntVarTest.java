@@ -21,17 +21,24 @@ public class IntVarTest {
         assertThat((Integer) url.variable("userId"), is(-2397));
     }
 
-    /*@Test
+    @Test
     public void whenNegIntIsNotExpectedThenUrlIsInvalid() {
-        RestParser parser = parser("/users/{}", posIntVar("userId"));
+        RestParser parser = parser("/users/{}", intVar("userId", "[0-9]+"));
         RestUrl url = parser.parse("http://www.mail.com/users/-2397");
         assertThat(url, isInvalid());
-    }*/
+    }
 
     @Test
     public void whenValueIsTooBigThenUrlIsInvalid() {
         RestParser parser = parser("/users/{}", intVar("userId"));
         RestUrl url = parser.parse("http://www.mail.com/users/493483292384928439432397");
+        assertThat(url, isInvalid());
+    }
+
+    @Test
+    public void whenVariableIsEmptyThenUrlIsInvalid() {
+        RestParser parser = parser("/users/{}", intVar("userId"));
+        RestUrl url = parser.parse("http://www.mail.com/users/");
         assertThat(url, isInvalid());
     }
 }

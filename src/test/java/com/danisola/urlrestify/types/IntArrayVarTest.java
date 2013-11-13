@@ -27,4 +27,11 @@ public class IntArrayVarTest {
         RestUrl url = parser.parse("http://www.mail.com/users/update?ids=3,a,9&ts=9379");
         assertThat(url, isInvalid());
     }
+
+    @Test
+    public void whenVariableIsEmptyThenUrlIsInvalid() {
+        RestParser parser = parser("/users/update?ids={}", intArrayVar("userId"));
+        RestUrl url = parser.parse("http://www.mail.com/users/update?ids=&ts=9379");
+        assertThat(url, isInvalid());
+    }
 }

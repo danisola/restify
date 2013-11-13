@@ -8,7 +8,15 @@ public class StrArrayVar extends AbstractVarType<String[]> {
         return new StrArrayVar(id);
     }
 
+    public static StrArrayVar strArrayVar(String id, String regex) {
+        return new StrArrayVar(id, regex);
+    }
+
     private StrArrayVar(String id) {
+        super(id);
+    }
+
+    private StrArrayVar(String id, String regex) {
         super(id);
     }
 

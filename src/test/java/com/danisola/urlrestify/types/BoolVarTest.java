@@ -22,6 +22,13 @@ public class BoolVarTest {
     }
 
     @Test
+    public void whenVariableIsEmptyThenUrlIsInvalid() {
+        RestParser parser = parser("/users?active={}", boolVar("isActive"));
+        RestUrl url = parser.parse("http://www.mail.com/users?active=");
+        assertThat(url, isInvalid());
+    }
+
+    @Test
     public void whenValueIsFalseThenIsCorrectlyParsed() {
         RestParser parser = parser("/users?active={}", boolVar("isActive"));
         RestUrl url = parser.parse("http://www.mail.com/users?active=FaLsE");

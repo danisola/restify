@@ -6,8 +6,16 @@ public class FloatVar extends AbstractVarType<Float> {
         return new FloatVar(id);
     }
 
+    public static FloatVar floatVar(String id, String regex) {
+        return new FloatVar(id, regex);
+    }
+
     private FloatVar(String id) {
         super(id);
+    }
+
+    private FloatVar(String id, String regex) {
+        super(id, regex);
     }
 
     @Override

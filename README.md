@@ -1,6 +1,6 @@
 # URL-RESTify #
 
-URL-RESTify is a lightweight library (19KB!) to easily validate and access the variables of any RESTful URL.
+URL-RESTify is a lightweight library (20KB!) to easily validate and access the variables of any RESTful URL.
 
 ## Usage ##
 
@@ -32,7 +32,7 @@ Example composing variables and using a regex:
 
 ```
   RestParser parser = parser("/battleship/shoot?square={}{}",
-          regexStrVar("char", "[A-L]"), intVar("num"));
+          strVar("char", "[A-L]"), intVar("num"));
 
   RestUrl url = parser.parse("http://www.games.com/battleship/shoot?square=B7");
   String xCoord = url.variable("char"); // B

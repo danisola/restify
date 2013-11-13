@@ -6,8 +6,16 @@ public class IntArrayVar extends AbstractVarType<Integer[]> {
         return new IntArrayVar(id);
     }
 
+    public static IntArrayVar intArrayVar(String id, String regex) {
+        return new IntArrayVar(id, regex);
+    }
+
     private IntArrayVar(String id) {
         super(id);
+    }
+
+    private IntArrayVar(String id, String regex) {
+        super(id, regex);
     }
 
     @Override
