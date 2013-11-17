@@ -17,7 +17,7 @@ String countryId = url.variable("countryId"); // "uk"
 Integer cityId = url.variable("cityId"); // 452
 ```
 
-See more examples and information [here](https://bitbucket.org/danisola/url-restify/).
+See more examples and information [here](url/).
 
 ## Servlet-RESTify
 
@@ -40,13 +40,15 @@ public class CityServlet extends RestServlet implements Get {
 
 ```
 
+See more examples and information [here](servlet/).
+
 
 ## FAQ
 
 * **Why would I use RESTify instead of Spring Framework or Jersey?** Sometimes we're forced to use plain Servlets or we just don't need all the features of a full-blown framework. Examples: when dealing with legacy web services or when creating projects for Google App Engine.
 * **Which variable types can I use?** Boolean, Double, Float, Integer, Long, String, UUID, String[] and Integer[]. It is also very easy to force variables to match a given regex.
-* **Can I add more types?** Yes, you just have to extend AbstractVarType. Check this [package](https://bitbucket.org/danisola/url-restify/src/master/src/main/java/com/danisola/urlrestify/types) for examples.
-* **Is it fast?** This depends on many variables (hardware, JVM, etc.), but I would say that is fast enough. These are the [microbenchmark](https://bitbucket.org/danisola/url-restify/src/master/src/test/java/com/danisola/urlrestify/UrlRestifyBenchmark.java) results on my development machine:
+* **Can I add more types?** Yes, you just have to extend AbstractVarType. Check this [package](url/src/main/java/com/danisola/restify/url/types) for examples.
+* **Are they fast?** This depends on many variables (hardware, JVM, etc.), but I would say that is fast enough. These are the [microbenchmark](url/src/test/java/com/danisola/restify/url/UrlRestifyBenchmark.java) results on my development machine:
 
 ```
      benchmark   us linear runtime
