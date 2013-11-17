@@ -1,8 +1,8 @@
-# URL-RESTify #
+# URL-RESTify
 
 URL-RESTify is a lightweight library to easily validate and access the variables of any RESTful URL.
 
-## Usage ##
+## Usage
 
 Usage example within a Servlet (consider using [Servlet-RESTify](../servlet/)!):
 
@@ -14,7 +14,6 @@ public class MyServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-
     RestUrl url = parser.parse(req.getRequestURI(), req.getQueryString());
     if (!url.isValid()) {
       resp.setStatus(SC_BAD_REQUEST); // Use url.errorMessage() to debug
