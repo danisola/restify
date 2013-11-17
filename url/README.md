@@ -41,8 +41,7 @@ Integer yCoord = url.variable("num"); // 7
 Example with String array:
 
 ```java
-RestParser parser = parser("/users/{}?fields={}",
-          intVar("userId"), strArrayVar("fields"));
+RestParser parser = parser("/users/{}?fields={}", intVar("userId"), strArrayVar("fields"));
 
 RestUrl url = parser.parse("http://www.network.com/users/31416?fields=name,age");
 Integer userId = url.variable("userId"); // 31416
@@ -52,8 +51,7 @@ String[] fields = url.variable("fields"); // ["name", "age"]
 Example with optional variables:
 
 ```java
-RestParser parser = parser("/cities?capital={}?",
-        opt(boolVar("isCapital")));
+RestParser parser = parser("/cities?capital={}?", opt(boolVar("isCapital")));
 
 RestUrl url = parser.parse("http://www.country.com/cities");
 Boolean isCapitalQuery = url.variable("isCapital"); // null

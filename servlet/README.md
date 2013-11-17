@@ -21,13 +21,13 @@ public class UserServlet extends RestServlet implements Get, Post {
 
   @Override
   public void get(HttpServletRequest req, HttpServletResponse res, RestUrl url) {
-    Long countryId = url.variable("userId");
+    Long userId = url.variable("userId");
     // Retrieve the user
   }
 
   @Override
   public void post(HttpServletRequest req, HttpServletResponse res, RestUrl url) {
-    Long countryId = url.variable("userId");
+    Long userId = url.variable("userId");
     // Update the user
   }
 }
