@@ -9,7 +9,7 @@ Currently RESTify has two sub-projects: URL-RESTify and Servlet-RESTify.
 
 Core library to deal with URLs directly, packed in 21KB! Here's an example of how you can use it:
 
-```
+```java
 RestParser parser = parser("/{}/{}", strVar("countryId", "[a-z]{2}"), intVar("cityId"));
 
 RestUrl url = parser.parse("http://www.world.com/uk/452");
@@ -23,25 +23,24 @@ See more examples and information [here](url/).
 
 Small wrapper around URL-Restify to simplify its usage in a Servlet environment. Example usage:
 
-```
+```java
 public class CityServlet extends RestServlet implements Get {
 
-    public CityServlet() {
-        super("/{}/{}", strVar("countryId", "[a-z]{2}"), intVar("cityId"));
-    }
-
-    @Override
-    public void get(HttpServletRequest req, HttpServletResponse res, RestUrl url) {
-        String countryId = url.variable("countryId");
-        Integer cityId = url.variable("cityId");
-        // Your code here
-    }
+  public CityServlet() {
+    super("/{}/{}", strVar("countryId", "[a-z]{2}"), intVar("cityId"));
+  }
+  
+  @Override
+  public void get(HttpServletRequest req, HttpServletResponse res, RestUrl url) {
+    String countryId = url.variable("countryId");
+    Integer cityId = url.variable("cityId");
+    // Your code here
+  }
 }
 
 ```
 
 See more examples and information [here](servlet/).
-
 
 ## FAQ
 
