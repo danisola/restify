@@ -22,10 +22,11 @@ public class StrVarTest {
     }
 
     @Test
-    public void whenVariableIsEmptyThenUrlIsInvalid() {
+    public void whenVariableIsEmptyThenUrlIsValid() {
         RestParser parser = parser("/country/{}/cities", strVar("countryId"));
         RestUrl url = parser.parse("http://www.world.com/country//cities");
-        assertThat(url, isInvalid());
+        assertThat(url, isValid());
+        assertThat((String) url.variable("countryId"), is(""));
     }
 
     @Test

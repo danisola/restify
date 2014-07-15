@@ -1,6 +1,6 @@
 package com.danisola.restify.url.types;
 
-import static com.danisola.restify.url.preconditions.Preconditions.checkArgumentNotNullOrEmpty;
+import static com.danisola.restify.url.preconditions.Preconditions.checkArgument;
 
 public class StrVar extends AbstractVarType<String> {
 
@@ -22,6 +22,7 @@ public class StrVar extends AbstractVarType<String> {
 
     @Override
     public String convert(String value) {
-        return checkArgumentNotNullOrEmpty(value);
+        checkArgument(value != null, "Argument cannot be null");
+        return value;
     }
 }

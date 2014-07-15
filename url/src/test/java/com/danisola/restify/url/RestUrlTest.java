@@ -40,6 +40,18 @@ public class RestUrlTest {
     }
 
     @Test
+    public void whenUrlContainsOptionalParametersThenItsValuesAreCorrect() {
+        RestParser parser = parser("/servers/{}{}?param={}",
+                strVar("environment"), strVar("optionalPath", "(?:/.*)?"), intVar("val"));
+
+        RestUrl url = parser.parse("http://www.company.com/servers/b?param=3");
+        assertThat(url, isValid());
+        assertThat((String) url.variable("environment"), is("b"));
+        assertThat((String) url.variable("optionalPath"), is(""));
+        assertThat((Integer) url.variable("val"), is(3));
+    }
+
+    @Test
     public void whenCompositeParamsAreDefinedThenItsValuesAreCorrect() {
         RestParser parser = parser("/battleship/shoot?square={}{}",
                 strVar("char", "[A-L]"), intVar("num", "[0-9]"));
